@@ -11,7 +11,37 @@ This guide provides steps to install Ansible on Ubuntu 18.04, 20.04, and 22.04 L
 
 ## Steps to Install Ansible
 
-### 1. Remove the Default Ansible Version
+### 1. Automated Installation Using a Bash Script
+
+You can automate the Ansible installation process by using the provided Bash script.
+
+#### Usage
+
+1. Clone this repository:
+
+    ```bash
+    git clone https://github.com/shegerbootcamp/ansible-devops.git
+
+    cd ansible-devops
+    ```
+
+2. Make the script executable:
+
+    ```bash
+    chmod +x install_ansible.sh
+    ```
+
+3. Run the script:
+
+    ```bash
+    ./install_ansible.sh
+    ```
+
+### 2. Manual Installation Steps
+
+If you prefer to install Ansible manually, follow these steps:
+
+#### Remove the Default Ansible Version
 
 First, remove any default version of Ansible supplied by the official Ubuntu repositories:
 
@@ -20,7 +50,7 @@ sudo apt remove ansible
 sudo apt --purge autoremove
 ```
 
-### 2. Update Ubuntu Repositories
+#### Update Ubuntu Repositories
 
 Update the Ubuntu repositories and apply all pending patches:
 
@@ -29,7 +59,7 @@ sudo apt update
 sudo apt upgrade
 ```
 
-### 3. Install `software-properties-common`
+#### Install `software-properties-common`
 
 Install the `software-properties-common` package to enable PPA (Personal Package Archive) support:
 
@@ -37,7 +67,7 @@ Install the `software-properties-common` package to enable PPA (Personal Package
 sudo apt -y install software-properties-common
 ```
 
-### 4. Add the Ansible PPA
+#### Add the Ansible PPA
 
 Add the Ansible PPA to your system:
 
@@ -45,7 +75,7 @@ Add the Ansible PPA to your system:
 sudo apt-add-repository ppa:ansible/ansible
 ```
 
-### 5. Install the Latest Version of Ansible
+#### Install the Latest Version of Ansible
 
 Finally, install the latest version of Ansible using `apt`:
 
@@ -83,7 +113,41 @@ This guide should help you set up Ansible on your Ubuntu system smoothly. For mo
 ansible-installation-guide/
 ├── README.md
 ├── LICENSE
+├── install_ansible.sh
 └── .gitignore
 ```
 
-Add the above README content to the `README.md` file in your GitHub repository. This will help users follow the steps to install Ansible on their Ubuntu systems.
+---
+
+### `install_ansible.sh`
+
+```bash
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+echo "Removing default Ansible version if installed..."
+sudo apt remove -y ansible || true
+sudo apt --purge autoremove -y
+
+echo "Updating Ubuntu repository and applying all pending patches..."
+sudo apt update
+sudo apt upgrade -y
+
+echo "Installing software-properties-common package..."
+sudo apt -y install software-properties-common
+
+echo "Adding Ansible PPA repository..."
+sudo apt-add-repository -y ppa:ansible/ansible
+
+echo "Installing the latest version of Ansible..."
+sudo apt update
+sudo apt install -y ansible
+
+echo "Ansible installation completed. Verifying the installation..."
+ansible --version
+
+echo "Ansible has been successfully installed!"
+```
+
