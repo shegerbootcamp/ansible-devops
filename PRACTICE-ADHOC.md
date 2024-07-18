@@ -1,10 +1,19 @@
 # Ansible Testing Guide
 
-## Inventory Setup
+## Project Setup
 
-1. **Create Inventory File:**
+### Step 1: Create Project Folder
 
-    Create a file named `hosts` in your current directory with the following content:
+1. **Create a new project directory named `ansible-adhoc`:**
+
+    ```bash
+    mkdir ansible-adhoc
+    cd ansible-adhoc
+    ```
+
+### Step 2: Create Inventory File
+
+1. **Create an inventory file named `hosts` in the project directory with the following content:**
 
     ```ini
     [all]
@@ -20,23 +29,34 @@
 
     Adjust the IP addresses and usernames as per your setup.
 
-2. **Initialize `ansible.cfg` File:**
+### Step 3: Initialize and Configure `ansible.cfg` File
 
-    Generate a default `ansible.cfg` file with all options disabled:
-    
+1. **Generate a default `ansible.cfg` file with all options disabled:**
+
     ```bash
     ansible-config init --disabled -t all > ansible.cfg
     ```
 
-3. **Configure `ansible.cfg` File:**
-
-    Open the `ansible.cfg` file and add the following configuration to set the inventory file path:
+2. **Open the `ansible.cfg` file and add the following configuration to set the inventory file path:**
 
     ```ini
     [defaults]
     inventory = ./hosts
     ```
 
+### Step 4: Project Structure
+
+Your project directory structure should look like this:
+
+```
+ansible-adhoc/
+├── ansible.cfg
+├── hosts
+```
+
+This guide should help you set up an Ansible project and configure it for use.
+
+---
 ## Common Ansible Ad-Hoc Commands
 
 Here are some common Ansible ad-hoc commands that you can use to perform various tasks on remote hosts:
