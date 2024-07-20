@@ -16,18 +16,15 @@
 1. **Create an inventory file named `hosts` in the project directory with the following content:**
 
     ```ini
-    [all]
-    server1 ansible_host=192.168.1.10 ansible_user=ubuntu
-    server2 ansible_host=192.168.1.11 ansible_user=ubuntu
+    [workstation]
+    192.168.1.10
 
-    [webservers]
-    server1
-
-    [dbservers]
-    server2
+    [remoteservers]
+    192.168.1.10
+    192.168.1.11
     ```
 
-    Adjust the IP addresses and usernames as per your setup.
+    Adjust the IP addresses as per your setup.
 
 ### Step 3: Initialize and Configure `ansible.cfg` File
 
@@ -83,9 +80,24 @@ To check if all hosts in your inventory are reachable, run:
 ansible all -m ping
 ```
 
+To check if workstation(server1) in your inventory are reachable, run:
+```bash
+ansible workstation -m ping
+```
+
+To check if remote servers(server2 & server3) in your inventory are reachable, run:
+```bash
+ansible remoteservers -m ping
+```
+
+To check if remote servers(server2 & server3) in your inventory disk space, run:
+```bash
+ansible remoteservers -m shell -a "df -h"
+```
+
 ### Run Command
 
-To run the `uptime` command on all hosts:
+To run the `uptime` command on all hosts including server 1(ubuntu):
 ```bash
 ansible all -m command -a "uptime"
 ```
@@ -99,16 +111,16 @@ ansible all -m copy -a "src=/path/to/local/file dest=/path/to/remote/file"
 
 ### Install Package
 
-To install the `nginx` package on all hosts using `apt` (for Debian/Ubuntu systems):
+To install the `nginx` package on remote servers or hosts using `apt` (for Debian/Ubuntu systems):
 ```bash
-ansible all -m apt -a "name=nginx state=present"
+ansible remoteservers -m apt -a "name=nginx state=present"
 ```
 
 ### Start Service
 
 To start the `nginx` service on all hosts:
 ```bash
-ansible all -m service -a "name=nginx state=started"
+ansible remoteservers -m service -a "name=nginx state=started"
 ```
 
 ### Gather Facts
